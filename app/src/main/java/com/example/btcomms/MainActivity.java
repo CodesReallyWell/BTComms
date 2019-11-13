@@ -181,10 +181,12 @@ public class MainActivity extends AppCompatActivity {
                     mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
                     bt = mBlueAdapter.getRemoteDevice(address);
 
+
                     try {
                         btSocket = bt.createRfcommSocketToServiceRecord(myUUID);
+                        mBlueAdapter.cancelDiscovery();
                         btSocket.connect();
-                        Thread.sleep(5000);
+
                     } catch (Exception e) {
                         showToast("Connection Failed." + e);
                         try{
@@ -206,6 +208,13 @@ public class MainActivity extends AppCompatActivity {
 
 
                     mConnectionTv.setText("Connected to: " + name + " " + address);
+
+                    String test = "Hello World!";
+                    try {
+                        mBTOutputStream.write(test.getBytes());
+                    } catch (IOException e3) {
+                        showToast("fail: " +e3);
+                    }
 
 
                 } else {
